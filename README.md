@@ -10,7 +10,7 @@ Detect scenes and extract them
 brew install mkvtoolnix
 
 ## python 3
-brew install python3
+brew install python3<br>
 pip3 install opencv-python
 
 ## ffmpeg
