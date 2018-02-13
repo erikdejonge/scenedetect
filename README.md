@@ -25,8 +25,9 @@ Folder with name testvideo containing humbnails and movies
 
 
 
-### alternative
-
+# alternative way via the scenedetect program
+**this is not complete, only the points are given**
+<br><br>
 #### python scenedetect
 wget https://github.com/Breakthrough/PySceneDetect/archive/v0.4.tar.gz<br>
 tar -xvf v0.4.tar.gz&&rm v0.4.tar.gz<br>
