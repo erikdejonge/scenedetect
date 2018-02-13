@@ -17,6 +17,11 @@ pip3 install opencv-python
 brew install ffmpeg
 
 
+# Execute
+python3 scenedetect.py testvideo.mp4
+
+
+
 # alternative
 
 ## python scenedetect

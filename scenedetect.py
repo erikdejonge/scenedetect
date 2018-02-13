@@ -7,7 +7,8 @@ Usage:
 
 Options:
   -h --help     Show this screen.
-
+  -d --debug    Keep intermediary files
+  
 author  : rabshakeh (erik@a8.nl)
 project : examples
 created : 11/02/2018 / 23:03
@@ -36,6 +37,7 @@ class IArguments(Arguments):
         __init__
         """
         self.help = False
+        self.debug = False
         self.input = ""
         super().__init__(doc)
 
@@ -59,7 +61,7 @@ def print_run(cmd):
     """
     print('\n', cmd)
 
-#    subprocess.call(cmd, shell=True)
+    subprocess.call(cmd, shell=True)
 
 
 def main():
@@ -67,6 +69,8 @@ def main():
     main
     """
     arguments = IArguments(__doc__)
+    if arguments.debug:
+        print(arguments)
     movie = os.path.join(os.getcwd(), arguments.input)
 
     if not os.path.exists(movie):
@@ -83,15 +87,28 @@ def main():
 
     timestamps = open('timestamps').read()
     timestamps = [float(x) for x in timestamps.split("\n") if isnum(x)]
-
+    
     timestamps.insert(0, 0)
     timestamps.reverse()
     timestamps2 = []
     prev = None
-
+    last = None
+    diff = 0.0
+    minimum_duration_scene = 0
     for x in timestamps:
+        if not last:
+            last = x
+        if not prev:
+            prev = x
+        print(type(prev), type(x))
         if prev:
-            timestamps2.append([str(x), '%.2f' % float(prev - x)])
+            diff += float('%.2f' % float(prev - x))
+            
+            
+            if diff > minimum_duration_scene:
+                timestamps2.append([str(last), str(diff)])
+                last = x
+                diff = 0
 
         prev = x
 
@@ -103,7 +120,8 @@ def main():
         cnt += 1
 
     print_run("mv "+moviebasename+"_* "+moviebasename)
-    print_run("rm ffout&&rm timestamps")
+    if not arguments.debug:
+        print_run("rm ffout&&rm timestamps")
 # )
 
 
