@@ -8,7 +8,7 @@ Usage:
 Options:
   -h --help     Show this screen.
   -d --debug    Keep intermediary files
-  
+
 author  : rabshakeh (erik@a8.nl)
 project : examples
 created : 11/02/2018 / 23:03
@@ -24,9 +24,11 @@ if sys.version_info.major < 3:
     exit(1)
 
 ffmpeg = "/usr/local/bin/ffmpeg"
+
 if not os.path.exists(ffmpeg):
     print("ffmpeg not found at", ffmpeg, "exiting")
     exit(1)
+
 
 class IArguments(Arguments):
     """
@@ -60,7 +62,6 @@ def print_run(cmd):
     @return: None
     """
     print('\n', cmd)
-
     subprocess.call(cmd, shell=True)
 
 
@@ -69,8 +70,10 @@ def main():
     main
     """
     arguments = IArguments(__doc__)
+
     if arguments.debug:
         print(arguments)
+
     movie = os.path.join(os.getcwd(), arguments.input)
 
     if not os.path.exists(movie):
@@ -79,15 +82,13 @@ def main():
 
     moviename = os.path.basename(movie)
     moviebasename = os.path.splitext(moviename)[0]
-    print_run(ffmpeg +" -i " + movie + " -filter:v \"select='gt(scene,0.4)',showinfo\" -vsync vfr -f null - 2> ffout")
+    print_run(ffmpeg + " -i " + movie + " -filter:v \"select='gt(scene,0.4)',showinfo\" -vsync vfr -f null - 2> ffout")
     print_run("grep showinfo ffout | puf \"[x.split('pts_time:')[1].split('pos')[0].strip() for x in lines if 'pts_time:' in x]\" >timestamps")
-
-    print_run(ffmpeg +" -i " + moviename + " -filter:v \"select='gt(scene,0.4)'\" -vsync vfr " + moviebasename + "_frame_%d.png")
+    print_run(ffmpeg + " -i " + moviename + " -filter:v \"select='gt(scene,0.4)'\" -vsync vfr " + moviebasename + "_frame_%d.png")
     print_run("mkdir " + moviebasename + "&&mv " + moviebasename + "*.png " + moviebasename)
-
     timestamps = open('timestamps').read()
     timestamps = [float(x) for x in timestamps.split("\n") if isnum(x)]
-    
+
     timestamps.insert(0, 0)
     timestamps.reverse()
     timestamps2 = []
@@ -95,16 +96,19 @@ def main():
     last = None
     diff = 0.0
     minimum_duration_scene = 0
+
     for x in timestamps:
         if not last:
             last = x
+
         if not prev:
             prev = x
+
         print(type(prev), type(x))
+
         if prev:
             diff += float('%.2f' % float(prev - x))
-            
-            
+
             if diff > minimum_duration_scene:
                 timestamps2.append([str(last), str(diff)])
                 last = x
@@ -119,9 +123,11 @@ def main():
         print_run("ffmpeg -ss " + x[0] + " -i " + moviename + " -c copy -t " + x[1] + " " + moviebasename + "_scene_" + str(cnt) + ".mp4")
         cnt += 1
 
-    print_run("mv "+moviebasename+"_* "+moviebasename)
+    print_run("mv " + moviebasename + "_* " + moviebasename)
+
     if not arguments.debug:
         print_run("rm ffout&&rm timestamps")
+
 # )
 
 
