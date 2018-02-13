@@ -1,5 +1,0 @@
- brew install mkvtoolnix
-pip3 install opencv-python
-
-wget https://github.com/Breakthrough/PySceneDetect/archive/v0.4.tar.gz
-tar -xvf v0.4.tar.gz

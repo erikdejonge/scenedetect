@@ -58,9 +58,8 @@ def print_run(cmd):
     @return: None
     """
     print('\n', cmd)
-    subprocess.run("pwd")
 
-    subprocess.call(cmd, shell=True)
+#    subprocess.call(cmd, shell=True)
 
 
 def main():
@@ -103,8 +102,8 @@ def main():
         print_run("ffmpeg -ss " + x[0] + " -i " + moviename + " -c copy -t " + x[1] + " " + moviebasename + "_scene_" + str(cnt) + ".mp4")
         cnt += 1
 
-    return
-
+    print_run("mv "+moviebasename+"_* "+moviebasename)
+    print_run("rm ffout&&rm timestamps")
 # )
 
 
