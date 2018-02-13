@@ -28,10 +28,10 @@ Folder with name testvideo containing humbnails and movies
 ### alternative
 
 #### python scenedetect
-wget https://github.com/Breakthrough/PySceneDetect/archive/v0.4.tar.gz
-tar -xvf v0.4.tar.gz&&rm v0.4.tar.gz
-cd PySceneDetect-0.4
-python3 setup.py install
+wget https://github.com/Breakthrough/PySceneDetect/archive/v0.4.tar.gz<br>
+tar -xvf v0.4.tar.gz&&rm v0.4.tar.gz<br>
+cd PySceneDetect-0.4<br>
+python3 setup.py install<br>
 
 #### execute
 scenedetect -i ./testvideo.mp4 -o scenes_list.csv -d content -si -df 4
