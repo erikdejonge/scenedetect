@@ -18,19 +18,22 @@ brew install ffmpeg
 
 
 # Execute
-python3 scenedetect.py testvideo.mp4
+> python3 scenedetect.py testvideo.mp4
+
+## result
+Folder with name testvideo containing humbnails and movies
 
 
 
-# alternative
+### alternative
 
-## python scenedetect
+#### python scenedetect
 wget https://github.com/Breakthrough/PySceneDetect/archive/v0.4.tar.gz
 tar -xvf v0.4.tar.gz&&rm v0.4.tar.gz
 cd PySceneDetect-0.4
 python3 setup.py install
 
-## execute
+#### execute
 scenedetect -i ./testvideo.mp4 -o scenes_list.csv -d content -si -df 4
 
 
